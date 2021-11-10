@@ -1,7 +1,11 @@
 const express = require("express");
 const { db } = require("../utils/database");
-const { Sequelize, QueryTypes } = require("sequelize");
+const { QueryTypes } = require("sequelize");
 const router = express.Router();
+const path = require("path");
+const { getSrcPath } = require("../utils/index.js");
+
+router.use("/static", express.static("../static", { root: __dirname }));
 
 router.get("/getcategories", async (req, res, next) => {
   try {
@@ -31,10 +35,14 @@ router.get("/getcategory/:categoryid", async (req, res, next) => {
   }
 });
 
-router.get("/getimages/:imgid", async (req, res, next) => {
-  res.json({
-    message: "get Images",
-  });
+router.get("/getimage/:imgid", async (req, res, next) => {
+  try {
+    const { imgid } = req.params;
+    const filePath = path.join(getSrcPath(__dirname), "static", `${imgid}.jpg`);
+    res.sendFile(filePath);
+  } catch (error) {
+    next(error);
+  }
 });
 
 module.exports = router;
