@@ -2,8 +2,8 @@
 
 - [x] Load Categories
 - [x] Serve Images
-
-To run the api type in dev mode your console
+- [] Upadte Frontend to work with images
+  To run the api type in dev mode your console
 
 ```
 npm run dev
