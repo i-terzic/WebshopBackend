@@ -2,7 +2,7 @@
 
 - [x] Load Categories
 - [x] Serve Images
-- [ ] Upadte Frontend to work with images
+- [ ] Update Frontend to work with images
   To run the api type in dev mode your console
 
 ```
