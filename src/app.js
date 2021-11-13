@@ -4,6 +4,7 @@ const cors = require("cors");
 const helmet = require("helmet");
 const api = require("./api");
 const path = require("path");
+const middlewares = require("./middlewares");
 
 const app = express();
 
@@ -12,8 +13,8 @@ require("dotenv").config(".env");
 app.use(morgan("dev"));
 app.use(cors());
 app.use(helmet());
+// app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
 
 app.get("/", (req, res, next) => {
   res.json({
@@ -22,5 +23,6 @@ app.get("/", (req, res, next) => {
 });
 
 app.use("/api/v1", api);
-
-module.exports = app;
+app.use(middlewares.notFound);
+app.use(middlewares.errorHandler);
+app, (module.exports = app);
