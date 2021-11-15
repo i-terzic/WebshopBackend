@@ -67,7 +67,6 @@ router.post("/category/:category", async (req, res, next) => {
 
 router.put("/category/:category/:itemid", async (req, res, next) => {
   const { category: id, itemid } = req.params;
-
   try {
     const validData = await itemSchema.validateAsync(req.body);
     if (validData.length === 0) next(new Error(`No valid data supplied`));
@@ -97,6 +96,31 @@ router.put("/category/:category/:itemid", async (req, res, next) => {
       },
     });
     res.json(result);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/category/:categoryid/:itemid", async (req, res, next) => {
+  const { category: id, itemid } = req.params;
+  try {
+    const validData = await itemSchema.validateAsync(req.body);
+    if (validData.length === 0) next(new Error(`No valid data supplied`));
+    if (!categoryExists(id))
+      res.json({ message: `Category: ${id} does not exists` });
+    const item = createCategory(id);
+    let result = await item.findAll({
+      where: {
+        id: itemid,
+      },
+    });
+    if (!result) next(new Error(`ItemId: ${itemid} - is not a valid ItemId`));
+    await item.destroy({
+      where: {
+        id: itemid,
+      },
+    });
+    res.json({ message: `Item ${itemid} - deleted successfully` });
   } catch (error) {
     next(error);
   }
