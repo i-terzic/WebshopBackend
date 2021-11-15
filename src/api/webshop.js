@@ -1,9 +1,15 @@
 const express = require("express");
-const { db } = require("../utils/database");
+const { db, createCategory } = require("../utils/database");
 const { QueryTypes } = require("sequelize");
 const router = express.Router();
 const path = require("path");
-const { getSrcPath, itemSchema } = require("../utils/index.js");
+const {
+  getSrcPath,
+  itemSchema,
+  categoryExists,
+  padNumber,
+  getCategoryName,
+} = require("../utils/index.js");
 
 // router.use("/static", express.static("../static", { root: __dirname }));
 
@@ -30,6 +36,30 @@ router.get("/category/:categoryid", async (req, res, next) => {
       type: QueryTypes.SELECT,
     });
     res.json({ [id]: data, status: "ok", code: 200 });
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.post("/category/:category", async (req, res, next) => {
+  const { category: id } = req.params;
+  try {
+    const validData = await itemSchema.validateAsync(req.body);
+    if (validData.length == 0) next(error);
+    if (!categoryExists(id))
+      res.json({ message: `Category: ${id} does not exists` });
+
+    const item = createCategory(id);
+    const results = await item.findAll();
+
+    const padNum = padNumber(results.length + 1, 2);
+    const name = getCategoryName(id);
+    const data = await item.create({
+      ...validData,
+      imgid: name + padNum,
+      id: name + padNum,
+    });
+    res.json({ [id]: data });
   } catch (error) {
     next(error);
   }
@@ -67,7 +97,7 @@ router.get("/category/:categoryid/:itemid", async (req, res, next) => {
 //     const filePath = path.join(getSrcPath(__dirname), "static", `${imgid}.jpg`);
 //     res.sendFile(filePath);
 //   } catch (error) {
-//     next(error);
+// next(error);
 //   }
 // });
 
