@@ -1,8 +1,11 @@
 const express = require("express");
+const path = require("path");
+const { getSrcPath } = require("./utils/index");
 const router = express.Router();
 
+router.use(express.static(path.join(getSrcPath(__dirname), "static")));
 router.get("/", (req, res, next) => {
-  // TODO
+  res.sendFile(path.join(__dirname, "static", "info.html"));
 });
 
 router.get("/categories", (req, res, next) => {

@@ -3,6 +3,7 @@ const { db, createCategory } = require("../utils/database");
 const { QueryTypes } = require("sequelize");
 const router = express.Router();
 const path = require("path");
+const fs = require("fs");
 const {
   getSrcPath,
   itemSchema,
@@ -141,25 +142,18 @@ router.get("/category/:categoryid/:itemid", async (req, res, next) => {
   }
 });
 
-// router.post("/category/item/:categoryid", async (req, res, next) => {
-//   try {
-//     const { data } = req.body;
-//     // const value = await itemSchema.validateAsync(data);
-//     // if (!value) next(new Error({ message: "Schema invalid" }));
-//     res.json(data);
-//   } catch (error) {
-//     next(error);
-//   }
-// });
+router.get("/image/:imgid", async (req, res, next) => {
+  try {
+    const { imgid } = req.params;
+    const filePath = path.join(getSrcPath(__dirname), "static", `${imgid}.jpg`);
+    res.sendFile(filePath);
+  } catch (error) {
+    next(error);
+  }
+});
 
-// router.get("/image/:imgid", async (req, res, next) => {
-//   try {
-//     const { imgid } = req.params;
-//     const filePath = path.join(getSrcPath(__dirname), "static", `${imgid}.jpg`);
-//     res.sendFile(filePath);
-//   } catch (error) {
-// next(error);
-//   }
-// });
+router.post("/imtage/:imgid", async (req, res, next) => {
+  // TODO
+});
 
 module.exports = router;

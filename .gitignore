@@ -1,3 +1,6 @@
 node_modules/
 .env
-src/static/
+src/static/*.jpg
+src/static/*.png
+src/static/*.ico
+src/static/*.svg
