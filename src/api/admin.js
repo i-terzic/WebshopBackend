@@ -37,7 +37,7 @@ router.post("/:category", async (req, res, next) => {
     if (req.body.image64 !== null) {
       const buffer = convertBase64toFile(req.body.img);
 
-      const msg = fs.writeFileSync(
+      var msg = fs.writeFileSync(
         path.join(getSrcPath(__dirname), "static", name + padNum + ".jpg"),
         buffer,
         (err) => {
@@ -46,11 +46,9 @@ router.post("/:category", async (req, res, next) => {
             : "An error has occured";
         }
       );
-      res.json({ [id]: data, message: msg });
-      return;
     }
 
-    res.json({ [id]: data });
+    res.json({ [id]: data, message: msg });
   } catch (error) {
     next(error);
   }
