@@ -15,7 +15,7 @@ app.use(morgan("dev"));
 app.use(cors());
 app.use(helmet());
 app.use(express.static(path.join(__dirname, "public")));
-app.use(express.json());
+app.use(express.json({ limit: "50mb" }));
 
 app.get("/", (req, res, next) => {
   res.sendFile(path.join(__dirname, "static", "info.html"));
@@ -25,4 +25,5 @@ app.use("/api/v1", api);
 app.use("/info", info);
 app.use(middlewares.notFound);
 app.use(middlewares.errorHandler);
-app, (module.exports = app);
+// app, (module.exports = app);
+module.exports = app;

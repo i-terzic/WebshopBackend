@@ -2,11 +2,26 @@ const path = require("path");
 const Joi = require("@hapi/joi");
 const { db } = require("./database");
 const { QueryTypes } = require("sequelize");
+const atob = require("atob");
 
 function getSrcPath(dirname) {
   const parts = dirname.split(path.sep).slice(0, -1);
   return parts.join(path.sep);
 }
+
+function convertBase64toFile(base64) {
+  let arr = base64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
+  let buffer = Buffer.from(arr[2], "base64");
+  return buffer;
+}
+
+const newItemSchema = Joi.object({
+  // category: Joi.string().trim().required(), // category is not required, since the endpoint for the resourcer is the category
+  name: Joi.string().trim().required(),
+  description: Joi.string().trim().required(),
+  price: Joi.number().precision(2).required(),
+  img: Joi.binary(),
+});
 
 const itemSchema = Joi.object({
   // category: Joi.string().trim().required(), // category is not required, since the endpoint for the resourcer is the category
@@ -42,4 +57,6 @@ module.exports = {
   categoryExists,
   padNumber,
   getCategoryName,
+  newItemSchema,
+  convertBase64toFile,
 };
