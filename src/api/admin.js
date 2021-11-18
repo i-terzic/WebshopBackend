@@ -47,7 +47,6 @@ router.post("/:category", async (req, res, next) => {
         }
       );
     }
-
     res.json({ [id]: data, message: msg });
   } catch (error) {
     next(error);
