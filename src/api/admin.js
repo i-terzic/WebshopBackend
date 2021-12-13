@@ -29,24 +29,25 @@ router.post("/:category", async (req, res, next) => {
 
     const padNum = padNumber(results.length + 1, 2);
     const name = getCategoryName(id);
-    const data = await item.create({
-      ...validData,
-      imgid: name + padNum,
-      id: name + padNum,
-    });
+
+    const imgPath =
+      req.body.image !== null
+        ? path.join(getSrcPath(__dirname), "static", name + padNum + ".jpg")
+        : "No Image";
     if (req.body.image64 !== null) {
       const buffer = convertBase64toFile(req.body.img);
 
-      var msg = fs.writeFileSync(
-        path.join(getSrcPath(__dirname), "static", name + padNum + ".jpg"),
-        buffer,
-        (err) => {
-          return err === null
-            ? "Successfully created img"
-            : "An error has occured";
-        }
-      );
+      var msg = fs.writeFileSync(imgPath, buffer, (err) => {
+        return err === null
+          ? "Successfully created img"
+          : "An error has occured";
+      });
     }
+    const data = await item.create({
+      ...validData,
+      imgid: imgPath,
+      id: name + padNum,
+    });
     res.json({ [id]: data, message: msg });
   } catch (error) {
     next(error);
