@@ -1,8 +1,7 @@
-const path = require("path");
-const Joi = require("@hapi/joi");
-const { db } = require("./database");
-const { QueryTypes } = require("sequelize");
-const atob = require("atob");
+const path = require('path');
+const Joi = require('@hapi/joi');
+const { QueryTypes } = require('sequelize');
+const { db } = require('./database');
 
 function getSrcPath(dirname) {
   const parts = dirname.split(path.sep).slice(0, -1);
@@ -10,8 +9,8 @@ function getSrcPath(dirname) {
 }
 
 function convertBase64toFile(base64) {
-  let arr = base64.match(/^data:([A-Za-z-+\/]+);base64,(.+)$/);
-  let buffer = Buffer.from(arr[2], "base64");
+  const arr = base64.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+  const buffer = Buffer.from(arr[2], 'base64');
   return buffer;
 }
 
@@ -33,7 +32,7 @@ const itemSchema = Joi.object({
 async function categoryExists(category) {
   try {
     const data = await db.query(
-      `SELECT * FROM shop.categories WHERE id = \'${category}\'`,
+      `SELECT * FROM shop.categories WHERE id ='${category}'`,
       { type: QueryTypes.SELECT }
     );
     return data.length !== 0;
@@ -43,11 +42,11 @@ async function categoryExists(category) {
 }
 
 function padNumber(num, places) {
-  return String(num).padStart(places, "0");
+  return String(num).padStart(places, '0');
 }
 
 function getCategoryName(category) {
-  if (!category.endsWith("s")) return category;
+  if (!category.endsWith('s')) return category;
   return category.slice(0, -1);
 }
 

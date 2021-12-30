@@ -1,6 +1,6 @@
-const Sequelize = require("sequelize");
-const connection =
-  process.env.CONNECTION ;
+const Sequelize = require('sequelize');
+
+const connection = process.env.CONNECTION;
 
 const db = new Sequelize(connection);
 
@@ -39,7 +39,7 @@ function createCategory(category) {
       },
     },
     {
-      schema: "shop",
+      schema: 'shop',
     }
   );
 }

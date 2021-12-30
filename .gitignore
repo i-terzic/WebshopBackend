@@ -4,3 +4,5 @@ src/static/*.jpg
 src/static/*.png
 src/static/*.ico
 src/static/*.svg
+
+.eslintrc.json
