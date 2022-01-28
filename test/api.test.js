@@ -6,5 +6,4 @@ test('App listens', async () => {
   app.listen(port, () => {
     console.log(`listening on port: http://localhost:${port}`);
   });
-  
 });
