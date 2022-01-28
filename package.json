@@ -20,8 +20,7 @@
     "monk": "^7.3.4",
     "morgan": "^1.10.0",
     "pg": "^8.7.1",
-    "sequelize": "^6.9.0",
-    "tailwindcss": "^2.2.19"
+    "sequelize": "^6.9.0"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.8.1",
@@ -31,6 +30,7 @@
     "eslint-config-node": "^2.0.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "^2.25.3",
+    "eslint-plugin-jest": "^26.0.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-prettier": "^4.0.0",
