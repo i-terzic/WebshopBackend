@@ -2,7 +2,7 @@
 
 ## DEV
 
-- [ ] implement routes
+- [x] implement routes
   - [x] categories
     - [x] get
     - not planed: post, put, delete
